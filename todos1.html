@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+body {
+    margin: 10% auto;
+    font-family: sans-serif;
+}
+#content {
+    max-width:700px;
+    min-width:50%;
+    margin: auto;
+}
+#topbar {
+    padding: 5px;
+    border-bottom: solid 5px #aaaaaa;
+}
+button {
+    float: right;
+}
+[id^="todo_"] {
+    clear:both;
+    padding: 0 10px 10px;
+}
+#title {
+    font-family: verdana;
+    letter-spacing: 0.1em;
+    padding: 0px;
+    font-size: 200%;
+    text-shadow: 0 0 -2px #aaaaaa;
+}
+#subtitle {
+    font-size: 70%; 
+    color: #777777;
+    padding-bottom: 20px;
+}
+
+</style>
+<script type="text/javascript">
+
+todos = [];
+
+document.addEventListener('keydown', (event) => {
+    const keyName = event.key;
+    if( keyName == 'Enter' ) {
+        addTodo();
+        e = document.getElementById("input");
+        v = e.value;
+        e.value = v + "JK";
+    }
+});
+
+function addTodo() {
+    var e = document.getElementById("input");
+    todos.push(e.value);
+    showTodos();
+}
+
+function showTodos() {
+    var e = document.getElementById("todos");
+    e.innerHTML = "";
+    for(i=0; i < todos.length; i++) {
+        d = document.createElement("div");
+        d.id = "todo_"+i;
+        d.innerHTML = todos[i];
+
+        del = document.createElement("button");
+        del.id = "del_"+i;
+        del.innerHTML = "-";
+        del.setAttribute("onClick", "delTodo("+i+");");
+
+        upd = document.createElement("button");
+        upd.id = "upd_"+i;
+        upd.innerHTML = "e";
+        upd.setAttribute("onClick", "updateTodo("+i+");");
+
+        d.appendChild(del);
+        d.appendChild(upd);
+        e.appendChild(d);
+    }
+}
+
+function delTodo(index) {
+    todos.splice(index,1);
+    showTodos();
+}
+
+function updateTodo(index) {
+    e = document.getElementById("input")
+    input.value = todos[index];
+    e.focus();
+
+    delTodo(index);
+}
+
+</script>
+<body>
+        <div id="content">
+        <div id="title">
+            Plain JavaScript - Todos
+        </div>
+        <div id="subtitle">
+            Train travelling was boring. 
+            I somehow spent 40mins in watching JavaScript videos,
+            and then deviated from it.
+        </div>
+                
+    <div id="topbar">
+    <input name="input" id="input" type="text" />
+    <button onclick="addTodo()">+</button>
+    </div>
+    <div id="todos">
+
+    </div>
+</div>
+
+</body>
+</html>
